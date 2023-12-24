@@ -1,0 +1,12 @@
+networks:
+  sekai-net:                          # Network name
+    bridge: "sekai-br"                # Bridge name
+    mac_addr: "52:54:00:a1:b1:c1"     # Bridge mac address
+    ip_addr: "137.10.10.1"            # Bridge ip address
+    netmask: "255.255.255.0"          # Bridge netmask
+  isekai-net:
+    bridge: "isekai-br"
+    mac_addr: "52:54:00:a1:b1:d1"
+    ip_addr: "137.11.11.1"
+    netmask: "255.255.255.0"
+    dhcp: "137.11.11.2,137.11.11.254" # Optional dhcp range
