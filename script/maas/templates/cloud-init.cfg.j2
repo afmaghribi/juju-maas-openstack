@@ -1,0 +1,14 @@
+#cloud-config
+hostname: {{ hostname }}
+users:
+  - name: {{ username }}
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    passwd: {{ hashed_password }}
+    lock_passwd: false
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - {{ pub_key }}
+apt:
+  disable_suites: [$RELEASE-backports]
+  package_update: true
+  package_upgrade: true

@@ -1,0 +1,14 @@
+machines:
+  name: maas                                  # vm name
+  vcpu: 2                                     # cpu
+  ram: 4096                                   # ram in MiB
+  pool_name: juju-maas-openstack_pool_images  # pool name
+  disk_base: focal-server-cloudimg-amd64.img  # base cloudimage
+  disk_size: 50G                              # root disk size
+  net_name: sekai-net                         # network attached to vm
+  ip_addr: 137.100.100.101                    # ip address
+cloud_init:
+  hostname: maas                              # hostname vm
+  username: ubuntu                            # vm username
+  password: ubuntu                            # vm password
+  # pub_key: /some/path/another_ssh_key       # optional key, default using ~/.ssh/id_rsa.pub

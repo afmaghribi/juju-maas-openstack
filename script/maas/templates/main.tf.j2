@@ -1,0 +1,60 @@
+terraform {
+  required_providers {
+    libvirt = {
+      source = "dmacvicar/libvirt"
+    }
+  }
+}
+
+provider "libvirt" {
+    uri = "qemu:///system"
+}
+
+data "template_file" "network_config" {
+  template = file("${path.module}/config/network-config.cfg")
+}
+
+data "template_file" "user_data" {
+  template = file("${path.module}/config/cloud-init.cfg")
+}
+
+resource "libvirt_cloudinit_disk" "ci_configs" {
+  name           = "cloud-init.iso"
+  user_data      = data.template_file.user_data.rendered
+  network_config = data.template_file.network_config.rendered
+  pool           = "{{ pool_name }}"
+}
+
+resource "libvirt_volume" "vm_volumes" {
+  name             = "{{ name + "-sda.qcow2" }}"
+  pool             = "{{ pool_name }}"
+  base_volume_name = "{{ disk_base }}"
+  size             = {{ disk_size.replace('G', '')|int * 1073741824 }}
+  format           = "qcow2"
+}
+
+resource "libvirt_domain" "vm_specs" {
+  name       = "{{ name }}"
+  arch       = "x86_64"
+  vcpu       = {{ vcpu }}
+  memory     = {{ ram }}
+  qemu_agent = "false"
+  cloudinit = libvirt_cloudinit_disk.ci_configs.id
+  cpu {
+    mode = "host-passthrough"
+  }
+
+  video {
+    type = "qxl"
+  }
+
+  network_interface {
+    network_name   = "{{ net_name }}"
+    hostname       = "{{ name }}"
+    addresses      = ["{{ ip_addr }}"]
+  }
+
+  disk {
+    volume_id = libvirt_volume.vm_volumes.id
+  }
+}

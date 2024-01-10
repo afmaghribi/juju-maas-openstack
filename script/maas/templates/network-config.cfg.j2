@@ -1,0 +1,14 @@
+network:
+  version: 1
+  config:
+  - type: physical
+    name: ens3
+    subnets:
+      - type: static
+        ipv4: true
+        address: {{ ip_addr }}
+        netmask: {{ netmask }}
+        gateway: {{ ip_gateway }}
+        control: auto
+  - type: nameserver
+    address: {{ ip_gateway }}
