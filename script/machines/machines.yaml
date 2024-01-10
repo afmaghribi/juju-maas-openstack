@@ -1,0 +1,36 @@
+pool_name: openstack_juju_images      # pool for virtual machines
+machines:
+  juju:                               # Virtual machines specs template name (grouping)
+    vcpu: 2                           # vcpu
+    ram: 4096                         # Ram in MiB
+    name:                             # List virtual machine names
+      - juju-controller
+    disk:                             # List disk for virtual machines
+      sda: 50G                        # Disk device and size
+    nic:                              # Virtual machines interface
+      - sekai-br                      # Network bridges
+  openstack:
+    vcpu: 4
+    ram: 8192
+    name:
+      - openstack-controller
+    disk:
+      sda: 50G
+    nic:
+      - sekai-br
+      - isekai-br
+  compute:
+    vcpu: 6
+    ram: 2048
+    name:
+      - compute01
+      - compute02
+      - compute03
+    disk:
+      sda: 50G
+      sdb: 25G
+      sdc: 25G
+      sdd: 25G
+    nic:
+      - sekai-br
+      - isekai-br
