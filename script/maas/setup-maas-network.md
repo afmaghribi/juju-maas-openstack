@@ -84,6 +84,15 @@ Now, fixed
 ![](../../img/maas14.png)
 </details>
 
+
+Add dns to subnet untagged vlan
+
+<details>
+
+![](../../img/maas15.png)
+</details>
+
+
 Next step to provision machine and commision
 
 [Next Step](../machines/)
