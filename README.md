@@ -20,11 +20,19 @@ So, basically the purpose of this repo is to deploy `openstack` consisting of se
 
 ## Network Topology
 
+<details><summary>Network topology</summary>
+
 ![Network topology](img/network-topology.png)
+
+</details>
 
 ## Distribution Application Topology
 
-![application topology](img/application-topology.png)
+<details><summary>Application topology</summary>
+
+![Application topology](img/application-topology.png)
+
+</details>
 
 ## Specs
 
