@@ -17,6 +17,8 @@ So, basically the purpose of this repo is to deploy `openstack` consisting of se
 | Operating System | Ubuntu 20.04 LTS (Focal) |
 | Openstack | Yoga |
 | Ceph | Quincy |
+| MAAS | 3.2.9 |
+| Juju | 3.2.3 |
 
 ## Network Topology
 
