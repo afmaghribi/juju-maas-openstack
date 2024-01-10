@@ -25,28 +25,28 @@ Create the virtual machines. Take note the output because we will use it for com
  ./manage_machines.py -c
 Created virtual machines details
 Name:	juju-controller
-UUID:	1680256e-f552-4963-bc6c-01811b0bbe3a
-Mac1:	52:54:00:16:ec:8f
+UUID:	642e49f9-0d42-42ae-a70e-e05c5df3dd74
+Mac1:	52:54:00:f2:5a:76
 
 Created virtual machines details
 Name:	openstack-controller
-UUID:	0570e540-6427-4aa9-9a90-0457bd2d3357
-Mac1:	52:54:00:84:ac:08
+UUID:	9a2c7699-192a-4c9f-bc11-bcbce969c5fa
+Mac1:	52:54:00:dc:03:19
 
 Created virtual machines details
 Name:	compute01
-UUID:	95b2743b-a0af-4509-ace4-a8ec87476f05
-Mac1:	52:54:00:be:1c:93
+UUID:	804f4607-ee7a-417b-88eb-e78e70440430
+Mac1:	52:54:00:99:72:85
 
 Created virtual machines details
 Name:	compute02
-UUID:	b1f3889e-fe36-404c-a200-73dc6e183aed
-Mac1:	52:54:00:95:64:8f
+UUID:	10b4d145-4f4e-4b13-89e7-89d0d854431f
+Mac1:	52:54:00:79:21:51
 
 Created virtual machines details
 Name:	compute03
-UUID:	4ef9d2a3-874d-4ecd-8c47-d7a6642cf20d
-Mac1:	52:54:00:b5:f8:f1
+UUID:	020fb276-fdb9-4f63-aae6-780bbcbd073f
+Mac1:	52:54:00:fb:53:71
 ```
 
 Next step to commisioning all machines

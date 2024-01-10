@@ -72,7 +72,7 @@ def generate_domain_xml(machine_name,specs):
     # Metadata Section
     domain_metadata = ET.SubElement(domain, "metadata")
     metadata_libosinfo = ET.SubElement(domain_metadata, "libosinfo:libosinfo", {"xmlns:libosinfo":"http://libosinfo.org/xmlns/libvirt/domain/1.0"})
-    ET.SubElement(metadata_libosinfo, "libosinfo:os", id="http://ubuntu.com/ubuntu/18.04")
+    ET.SubElement(metadata_libosinfo, "libosinfo:os", id="http://ubuntu.com/ubuntu/20.04")
     
     # Memory section
     ET.SubElement(domain, "memory", unit="MiB").text = str(specs['ram'])
