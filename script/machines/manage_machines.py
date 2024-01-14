@@ -110,7 +110,7 @@ def generate_domain_xml(machine_name,specs):
         domain_disk = ET.SubElement(domain_devices, "disk", type="file", device="disk")
         ET.SubElement(domain_disk, "driver", name="qemu", type="qcow2")
         ET.SubElement(domain_disk, "source", file=vol_path)
-        ET.SubElement(domain_disk, "target", dev=device, bus="scsi")
+        ET.SubElement(domain_disk, "target", dev=device, bus="virtio")
     
     # Device NIC section
     for br_name in specs['nic']:
