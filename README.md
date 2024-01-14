@@ -40,14 +40,14 @@ So, basically the purpose of this repo is to deploy `openstack` consisting of se
 
 ### Virtual Machines
 
-| VM Name | vCpu | Memory | Storage | External endpoint IP |
-|-|-|-|-|-|
-| maas | 2 | 4G | 50G | 137.100.100.101 |
-| juju-controller | 2 | 4G | 50G | 137.100.100.102 |
-| openstack-controller | 6 | 8G | 50G | 137.100.100.103 |
-| compute01 | 4 | 8G | 50GB (root)<br>3x25G (OSD) | 137.100.100.104 |
-| compute02 | 4 | 8G | 50GB (root)<br>3x25G (OSD) | 137.100.100.105 |
-| compute03 | 4 | 8G | 50GB (root)<br>3x25G (OSD) | 137.100.100.106 |
+| VM Name | vCpu | Memory | Storage | External endpoint IP | Neutron external network |
+|-|-|-|-|-|-|
+| maas | 2 | 4G | 50G | 137.100.100.101 | - |
+| juju-controller | 2 | 4G | 50G | 137.100.100.102 | - |
+| openstack-controller | 6 | 8G | 50G | 137.100.100.103 | 137.111.111.103 |
+| compute01 | 4 | 8G | 50GB (root)<br>3x25G (OSD) | 137.100.100.104 | 137.111.111.104 |
+| compute02 | 4 | 8G | 50GB (root)<br>3x25G (OSD) | 137.100.100.105 | 137.111.111.105 |
+| compute03 | 4 | 8G | 50GB (root)<br>3x25G (OSD) | 137.100.100.106 | 137.111.111.106 |
 
 ### Testing Environment
 
