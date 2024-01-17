@@ -1,0 +1,17 @@
+series: focal
+applications:
+  ceph-osd:
+    charm: ceph-osd
+    channel: stable
+    num_units: 0
+    options:
+      customize-failure-domain: false
+      aa-profile-mode: disable
+      osd-devices: /dev/vdb /dev/vdc /dev/vdd
+      source: cloud:focal-yoga
+    bindings:
+      "": external
+      cluster: internal
+      mon: internal
+      public: internal
+      secrets-storage: internal

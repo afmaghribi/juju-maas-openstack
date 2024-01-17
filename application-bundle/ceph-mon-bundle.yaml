@@ -1,0 +1,24 @@
+series: focal
+applications:
+  ceph-mon:
+    charm: ceph-mon
+    channel: stable
+    num_units: 0
+    options:
+      source: cloud:focal-yoga
+      customize-failure-domain: false
+      expected-osd-count: 3
+      monitor-count: 1
+      default-rbd-features: 1
+    bindings:
+      "": external
+      admin: internal
+      bootstrap-source: internal
+      client: internal
+      cluster: internal
+      mds: internal
+      mon: internal
+      osd: internal
+      public: internal
+      radosgw: internal
+      rbd-mirror: internal

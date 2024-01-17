@@ -1,0 +1,19 @@
+series: focal
+applications:
+  mysql-innodb-cluster:
+      charm: mysql-innodb-cluster
+      channel: 8.0/stable
+      num_units: 0
+      options:
+        source: cloud:focal-yoga
+        enable-binlogs: true
+        innodb-buffer-pool-size: 6G
+        max-connections: 10000
+        os-db-router-hostname: 192.168.100.100
+      bindings:
+        "": external
+        cluster: internal
+        coordinator: internal
+        db-monitor: internal
+        db-router: internal
+        shared-db: internal

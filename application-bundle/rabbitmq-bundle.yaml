@@ -1,0 +1,16 @@
+series: focal
+applications:
+  rabbitmq-server:
+    charm: rabbitmq-server
+    num_units: 0
+    options:
+      source: cloud:focal-yoga
+      access-network: 192.168.100.0/24
+      cluster-network: 192.168.100.0/24
+      min-cluster-size: 1
+      queue_thresholds: '[[\*, \*, 5000, 7000]]'
+    bindings:
+      "": external
+      amqp: internal
+      cluster: internal
+      ha: internal
