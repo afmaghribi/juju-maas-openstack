@@ -143,3 +143,89 @@ juju add-unit rabbitmq-server --to lxd:0
 
 ![](../img/juju11.png)
 </details>
+
+
+## Deploy Vault
+
+Deploy `Vault` application using `vault-bundle.yaml` juju bundle file.
+
+```
+juju deploy ./rabbitmq-bundle.yaml
+```
+
+<details>
+
+![](../img/juju13.png)
+</details>
+
+
+Add `vault` unit to `openstack-controller` as lxd and add relation to `mysql-innodb-cluster` and wait until unit `active`
+
+```
+juju add-unit vault --to lxd:0
+juju integrate vault-mysql-router:db-router mysql-innodb-cluster:db-router
+juju integrate vault-mysql-router:shared-db vault:shared-db
+```
+
+<details>
+
+![](../img/juju14.png)
+</details>
+
+Now, we need to initialized the vault.
+
+First, install vault client
+
+```
+sudo snap install vault
+```
+
+
+Initialized the vault
+```
+// IP Vault unit
+export VAULT_ADDR="http://137.100.100.112:8200"
+
+// Init, take note of output
+vault operator init -key-shares=5 -key-threshold=3
+```
+
+<details><summary>example output</summary>
+
+![](../img/juju15.png)
+</details>
+
+Unseal vault using 3 different keys
+
+```
+vault operator unseal T82okGEL8b+42gS7gVQWEAMb12wFRQv6q0BfImrKjzh3
+vault operator unseal cun8bN3RliYlgAvLlY9rTT1Zw4v7WLhOpiNTGsKapjUo
+vault operator unseal /MORxA/rm+2HK+rU2qGlmwXHtbsZ8d9J5BgUqS2ZsflZ
+```
+
+Last, authorise the vault charm
+
+```
+// Using root token
+export VAULT_TOKEN=s.OuYXFKTAvvW1iQsemQpZiD0V
+
+// Create Token
+vault token create -ttl=10m
+```
+
+<details>
+
+![](../img/juju16.png)
+</details>
+
+```
+// Using token generate before
+juju run vault/leader authorize-charm token=s.yLYHAZg2H6XFgZkTs5pLEqcC
+```
+
+Make sure vault unit `active`
+
+<details>
+
+![](../img/juju17.png)
+</details>

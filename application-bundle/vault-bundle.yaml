@@ -1,0 +1,26 @@
+series: focal
+applications:
+  vault:
+    charm: vault
+    channel: 1.7/stable
+    num_units: 0
+    bindings:
+      "": external
+      access: internal
+      certificates: internal
+      cluster: internal
+      db: internal
+      etcd: internal
+      external: internal
+      ha: internal
+      nrpe-external-master: internal
+      secrets: internal
+      shared-db: internal
+  vault-mysql-router:
+    charm: mysql-router
+    options:
+      source: cloud:focal-yoga
+    bindings:
+      "": external
+      shared-db: internal
+      db-router: internal
