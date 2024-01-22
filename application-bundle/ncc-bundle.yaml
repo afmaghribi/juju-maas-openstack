@@ -1,0 +1,44 @@
+series: focal
+applications:
+  nova-cloud-controller:
+    charm: nova-cloud-controller
+    num_units: 0
+    options:
+      openstack-origin: cloud:focal-yoga
+      action-managed-upgrade: true
+      use-internal-endpoints: true
+      network-manager: Neutron
+      console-access-protocol: spice
+      cpu-allocation-ratio: 2
+      ram-allocation-ratio: 0.8 
+      config-flags: "reclaim_instance_interval=1209600,vif_plugging_is_fatal=false,vif_plugging_timeout=0"
+      region: Isekai
+      os-admin-hostname: nova.lychnobyte.cloud
+      os-internal-hostname: nova.internal.lychnobyte.cloud
+      os-public-hostname: nova.lychnobyte.cloud
+    bindings:
+      "": external
+      amqp: internal
+      amqp-cell: internal
+      cinder-volume-service: internal
+      cloud-compute: internal
+      cloud-controller: internal
+      cluster: internal
+      ha: internal
+      identity-service: internal
+      image-service: internal
+      internal: internal
+      memcache: internal
+      neutron-api: internal
+      nova-cell-api: internal
+      placement: internal
+      shared-db: internal
+      shared-db-cell: internal
+  ncc-mysql-router:
+    charm: mysql-router
+    options:
+      source: cloud:focal-yoga
+    bindings:
+      "": external
+      shared-db: internal
+      db-router: internal

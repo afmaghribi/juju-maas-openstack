@@ -56,7 +56,7 @@ Units added but still `blocked` with `missing relations` message.
 Add relation for `ceph-mon` to `ceph-osd`
 
 ```
-juju add-relation ceph-mon:osd ceph-osd:mon
+juju integrate ceph-mon:osd ceph-osd:mon
 ```
 
 <details><summary>wait osd ready</summary>
@@ -310,4 +310,38 @@ Now, all unit are `active`.
 <details>
 
 ![](../img/juju21.png)
+</details>
+
+
+## Deploy Keystone
+
+Deploy `nova-cloud-controller` application using `ncc-bundle.yaml`.
+
+```
+juju deploy ./ncc-bundle.yaml
+```
+
+Add `nova-cloud-controller` unit, then add relation to `mysql-innodb-cluster` database and `rabbitmq-server` messaging.
+
+```
+juju add-unit nova-cloud-controller --to lxd:0
+
+juju integrate ncc-mysql-router:db-router mysql-innodb-cluster:db-router
+juju integrate ncc-mysql-router:shared-db nova-cloud-controller:shared-db
+juju integrate nova-cloud-controller:amqp rabbitmq-server:amqp
+```
+
+And add relation to `keystone`, `neutron` and `vault`
+
+```
+juju integrate nova-cloud-controller:identity-service keystone:identity-service
+juju integrate nova-cloud-controller:neutron-api neutron-api:neutron-api
+juju integrate nova-cloud-controller:certificates vault:certificates
+```
+
+Still missing some relations, we'll fix later.
+
+<details>
+
+![](../img/juju22.png)
 </details>
