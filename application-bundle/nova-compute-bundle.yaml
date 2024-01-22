@@ -1,0 +1,37 @@
+series: focal
+applications:
+  nova-compute:
+    charm: nova-compute
+    num_units: 0
+    options:
+      openstack-origin: cloud:focal-yoga
+      action-managed-upgrade: true
+      cpu-allocation-ratio: 2
+      ram-allocation-ratio: 0.8
+      cpu-mode: host-passthrough
+      enable-live-migration: true
+      enable-resize: true
+      migration-auth-type: ssh
+      inject-password: true
+      reserved-host-memory: 1024
+      libvirt-migration-network: 192.168.100.0/24
+      live-migration-permit-auto-converge: true
+      live-migration-permit-post-copy: true
+      resume-guests-state-on-host-boot: true
+      use-internal-endpoints: true
+      config-flags: "reclaim_instance_interval=1209600,vif_plugging_is_fatal=false,vif_plugging_timeout=0"
+    bindings:
+      "": external
+      amqp: internal
+      ceph: internal
+      ceph-access: internal
+      cloud-compute: internal
+      cloud-credentials: internal
+      compute-peer: internal
+      ephemeral-backend: internal
+      image-service: internal
+      internal: internal
+      migration: internal
+      neutron-plugin: internal
+      nova-ceilometer: internal
+      secrets-storage: internal

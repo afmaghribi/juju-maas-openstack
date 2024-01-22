@@ -346,3 +346,32 @@ Still missing some relations, we'll fix later.
 ![](../img/juju22.png)
 </details>
 
+## Deploy Nova-compute
+
+Deploy `nova-compute` application using `nova-compute-bundle.yaml`.
+
+```
+juju deploy ./nova-compute-bundle.yaml
+```
+
+Add unit to machine
+
+```
+juju add-unit nova-compute -n 3 --to 1,2,3
+```
+
+Add relations to `ceph-mon`, `nova-cloud-controller`, `rabbitmq-server` and `openvswitch`.
+
+```
+juju integrate ceph-mon:client nova-compute:ceph
+juju integrate nova-cloud-controller:cloud-compute nova-compute:cloud-compute
+juju integrate rabbitmq-server:amqp nova-compute:amqp
+juju integrate nova-compute:neutron-plugin neutron-openvswitch:neutron-plugin
+```
+
+Still missing some relations, we'll fix later.
+
+<details>
+
+![](../img/juju23.png)
+</details>
