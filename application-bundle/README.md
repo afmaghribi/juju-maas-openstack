@@ -402,3 +402,36 @@ Still missing some relations, we'll fix later.
 
 ![](../img/juju24.png)
 </details>
+
+## Deploy Glance
+
+Deploy `glance` application using `glance-bundle.yaml`.
+
+Deploy bundle
+```
+juju deploy ./glance-bundle.yaml
+```
+
+Add unit to `openstack-controller` as lxd and relation to `database`, `ceph-mon`, `nova`, `keystone` and `vault`
+
+```
+juju add-unit glance --to lxd:0
+
+juju integrate glance-mysql-router:db-router mysql-innodb-cluster:db-router
+juju integrate glance-mysql-router:shared-db glance:shared-db
+
+juju integrate ceph-mon:client glance:ceph
+
+juju integrate glance:image-service nova-cloud-controller:image-service
+juju integrate glance:image-service nova-compute:image-service
+juju integrate glance:identity-service keystone:identity-service
+
+juju integrate glance:certificates vault:certificates
+```
+
+Now, all units is `active` and `no missing relations`.
+
+<details>
+
+![](../img/juju25.png)
+</details>

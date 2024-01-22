@@ -1,0 +1,36 @@
+series: focal
+applications:
+  glance:
+    charm: glance
+    num_units: 0
+    options:
+      openstack-origin: cloud:focal-yoga
+      action-managed-upgrade: true
+      use-internal-endpoints: true
+      disk-formats: iso,qcow2,raw
+      rbd-pool-name: glance
+      region: Isekai
+      os-admin-hostname: glance.lychnobyte.cloud
+      os-internal-hostname: glance.internal.lychnobyte.cloud
+      os-public-hostname: glance.lychnobyte.cloud
+    bindings:
+      "": external
+      amqp: internal
+      ceph: internal
+      cinder-volume-service: internal
+      cluster: internal
+      ha: internal
+      identity-service: internal
+      image-service: internal
+      internal: internal
+      object-store: internal
+      shared-db: internal
+      storage-backend: internal
+  glance-mysql-router:
+    charm: mysql-router
+    options:
+      source: cloud:focal-yoga
+    bindings:
+      "": external
+      shared-db: internal
+      db-router: internal
