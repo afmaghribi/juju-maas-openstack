@@ -1,0 +1,30 @@
+series: focal
+applications:
+  keystone:
+    charm: keystone
+    num_units: 0
+    options:
+      openstack-origin: cloud:focal-yoga
+      action-managed-upgrade: true
+      preferred-api-version: 3
+      admin-password: Z3r0Tru$t
+      region: Isekai
+      os-admin-hostname: keystone.lychnobyte.cloud
+      os-internal-hostname: keystone.internal.lychnobyte.cloud
+      os-public-hostname: keystone.lychnobyte.cloud
+    bindings:
+      "": external
+      cluster: internal
+      domain-backend: internal
+      ha: internal
+      identity-service: internal
+      internal: internal
+      shared-db: internal
+  keystone-mysql-router:
+    charm: mysql-router
+    options:
+      source: cloud:focal-yoga
+    bindings:
+      "": external
+      shared-db: internal
+      db-router: internal
