@@ -1,0 +1,30 @@
+series: focal
+applications:
+  placement:
+    charm: placement
+    num_units: 0
+    options:
+      openstack-origin: cloud:focal-yoga
+      action-managed-upgrade: true
+      use-internal-endpoints: true  
+      region: Isekai
+      os-admin-hostname: placement.lychnobyte.cloud
+      os-internal-hostname: placement.internal.lychnobyte.cloud
+      os-public-hostname: placement.lychnobyte.cloud
+    bindings:
+      "": external
+      amqp: internal
+      cluster: internal
+      ha: internal
+      identity-service: internal
+      internal: internal
+      placement: internal
+      shared-db: internal
+  placement-mysql-router:
+    charm: mysql-router
+    options:
+      source: cloud:focal-yoga
+    bindings:
+      "": external
+      shared-db: internal
+      db-router: internal

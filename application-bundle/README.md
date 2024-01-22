@@ -375,3 +375,30 @@ Still missing some relations, we'll fix later.
 
 ![](../img/juju23.png)
 </details>
+
+## Deploy Placement
+
+Deploy `placement` application using `placement-bundle.yaml`.
+
+```
+juju deploy ./placement-bundle.yaml
+```
+
+Add unit to to `openstack-controller` as lxd and relations to `database`, `messaging`, `keystone`, `nova-cloud-controller` and `vault`
+
+```
+juju add-unit placement --to lxd:0
+
+juju integrate placement-mysql-router:db-router mysql-innodb-cluster:db-router
+juju integrate placement-mysql-router:shared-db placement:shared-db
+juju integrate placement:identity-service keystone:identity-service
+juju integrate placement:placement nova-cloud-controller:placement
+juju integrate placement:certificates vault:certificates
+```
+
+Still missing some relations, we'll fix later.
+
+<details>
+
+![](../img/juju24.png)
+</details>
