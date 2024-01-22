@@ -313,7 +313,7 @@ Now, all unit are `active`.
 </details>
 
 
-## Deploy Keystone
+## Deploy Nova Cloud Controller
 
 Deploy `nova-cloud-controller` application using `ncc-bundle.yaml`.
 
@@ -345,3 +345,4 @@ Still missing some relations, we'll fix later.
 
 ![](../img/juju22.png)
 </details>
+
