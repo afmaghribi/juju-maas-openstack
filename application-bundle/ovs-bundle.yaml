@@ -1,0 +1,19 @@
+series: focal
+applications:
+  neutron-openvswitch:
+    charm: neutron-openvswitch
+    options:
+      bridge-mappings: physnet1:br-ex1
+      data-port: br-ex1:eth0
+      enable-local-dhcp-and-metadata: true
+      use-dvr-snat: true
+      ovs-use-veth: "True"
+      os-data-network: 192.168.100.0/24
+      firewall-driver: openvswitch
+    bindings:
+      "": external
+      amqp: internal
+      data: internal
+      neutron-control: internal
+      neutron-plugin: internal
+      neutron-plugin-api: internal

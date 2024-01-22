@@ -1,0 +1,46 @@
+series: focal
+applications:
+  neutron-api:
+    charm: neutron-api
+    num_units: 0
+    options:
+      openstack-origin: cloud:focal-yoga
+      action-managed-upgrade: true
+      allow-automatic-l3agent-failover: false
+      default-tenant-network-type: vxlan
+      dhcp-agents-per-network: 2
+      enable-dvr: true
+      enable-fwaas: false
+      enable-l3ha: true
+      flat-network-providers: physnet1
+      manage-neutron-plugin-legacy-mode: true
+      enable-ml2-port-security: true
+      neutron-security-groups: true
+      use-internal-endpoints: true
+      overlay-network-type: vxlan
+      path-mtu: 1550
+      physical-network-mtus: physnet1:1500
+      region: Isekai
+      os-admin-hostname: neutron.lychnobyte.cloud
+      os-internal-hostname: neutron.internal.lychnobyte.cloud
+      os-public-hostname: neutron.lychnobyte.cloud
+    bindings:
+      "": external
+      amqp: internal
+      cluster: internal
+      ha: internal
+      identity-service: internal
+      internal: internal
+      neutron-api: internal
+      neutron-load-balancer: internal
+      neutron-plugin-api: internal
+      neutron-plugin-api-subordinate: internal
+      shared-db: internal
+  neutron-mysql-router:
+    charm: mysql-router
+    options:
+      source: cloud:focal-yoga
+    bindings:
+      "": external
+      shared-db: internal
+      db-router: internal
