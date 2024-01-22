@@ -93,6 +93,21 @@ Add dns to subnet untagged vlan
 </details>
 
 
+Add gateway in hypervisor (your device)
+
+```
+sudo ip link add link sekai-br name sekai.1337 type vlan id 1337
+sudo ip add add 192.168.100.1/24 dev sekai.1337
+sudo ip link set up sekai.1337
+```
+
+Add gateway in maas
+
+<details>
+
+![](../../img/maas15-2.png)
+</details>
+
 Next step to provision machine and commision
 
 [Next Step](../machines/)
