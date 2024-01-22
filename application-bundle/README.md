@@ -150,7 +150,7 @@ juju add-unit rabbitmq-server --to lxd:0
 Deploy `Vault` application using `vault-bundle.yaml` juju bundle file.
 
 ```
-juju deploy ./rabbitmq-bundle.yaml
+juju deploy ./vault-bundle.yaml
 ```
 
 <details>
@@ -223,9 +223,91 @@ vault token create -ttl=10m
 juju run vault/leader authorize-charm token=s.yLYHAZg2H6XFgZkTs5pLEqcC
 ```
 
-Make sure vault unit `active`
+Make sure `vault` unit `active`
 
 <details>
 
 ![](../img/juju17.png)
+</details>
+
+Add relation `vault` to `mysql-innodb-cluster` to enabled TLS.
+
+```
+juju run vault/leader generate-root-ca
+juju integrate mysql-innodb-cluster:certificates vault:certificates
+```
+
+## Deploy Neutron
+
+Deploy `Neutron` application using `neutron-bundle.yaml` juju bundle file and `openvswitch` as neutron plugin `ovs-bundle.yaml`.
+
+```
+juju deploy ./neutron-bundle.yaml
+juju deploy ./ovs-bundle.yaml
+```
+
+<details>
+
+![](../img/juju18.png)
+</details>
+
+
+Add `neutron-api` unit to `openstack-controller` and relations to `mysql-innodb-cluster` and `rabbitmq-server`.
+
+```
+juju add-unit neutron-api --to lxd:0
+
+juju integrate neutron-mysql-router:db-router mysql-innodb-cluster:db-router
+juju integrate neutron-mysql-router:shared-db neutron-api:shared-db
+juju integrate neutron-api:amqp rabbitmq-server:amqp
+```
+
+Now, `neutron-api` message status `Missing relations: identity`. We'll fix it later
+
+<details>
+
+![](../img/juju19.png)
+</details>
+
+Then add relation from `neutron-api` to `openvswitch` plugin and from `openvswitch` to `rabbitmq-server`
+
+```
+juju integrate neutron-api:neutron-plugin-api neutron-openvswitch:neutron-plugin-api
+
+juju integrate neutron-openvswitch:amqp rabbitmq-server:amqp
+```
+
+## Deploy Keystone
+
+Deploy `Keystone` application using `keystone-bundle.yaml`.
+
+```
+juju deploy ./keystone-bundle.yaml
+```
+
+<details>
+
+![](../img/juju20.png)
+</details>
+
+Add `keystone` unit and relation to `mysql-innodb-cluster`.
+
+```
+juju add-unit keystone --to lxd:0
+
+juju integrate keystone-mysql-router:db-router mysql-innodb-cluster:db-router
+juju integrate keystone-mysql-router:shared-db keystone:shared-db
+```
+Add relation to `neutron-api` to fix `missing: identity` and relation to `vault`
+
+```
+juju integrate keystone:identity-service neutron-api:identity-service
+juju integrate keystone:certificates vault:certificates
+```
+
+Now, all unit are `active`.
+
+<details>
+
+![](../img/juju21.png)
 </details>
