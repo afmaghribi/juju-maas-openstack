@@ -302,7 +302,7 @@ Add relation to `neutron-api` to fix `missing: identity` and relation to `vault`
 
 ```
 juju integrate keystone:identity-service neutron-api:identity-service
-juju integrate keystone:certificates vault:certificates
+juju integrate neutron-api:certificates vault:certificates
 ```
 
 Now, all unit are `active`.
@@ -479,3 +479,79 @@ juju integrate cinder-ceph:ceph-access nova-compute:ceph-access
 
 ![](../img/juju27.png)
 </details>
+
+## Deploy Cinder
+
+Last, we will deploy `openstack-dashboard` application using `dashboard-bundle.yaml`.
+
+Deploy bundle
+```
+juju deploy ./dashboard-bundle.yaml
+```
+
+Add `openstack-dashboard` unit to `openstack-controller` as lxd
+and relation to `database`, `keystone`, and `vault`
+
+```
+juju add-unit openstack-dashboard --to lxd:0
+
+juju integrate dashboard-mysql-router:db-router mysql-innodb-cluster:db-router
+juju integrate dashboard-mysql-router:shared-db openstack-dashboard:shared-db
+
+juju integrate openstack-dashboard:identity-service keystone:identity-service
+juju integrate openstack-dashboard:certificates vault:certificates
+```
+
+Now, all openstack components already installed and running
+
+<details>
+
+![](../img/juju27.png)
+</details>
+
+
+## Access Dashboard
+
+Get IP address Openstack Dashboard and Get password admin for login
+
+```
+juju status --format=yaml openstack-dashboard | grep public-address | awk '{print $2}' | head -1
+
+juju run keystone/leader get-admin-password
+```
+
+<details><summary>login page</summary>
+
+![](../img/dashboard1.png)
+</details>
+
+<details><summary>home page</summary>
+
+![](../img/dashboard2.png)
+</details>
+
+If get some dns error, just add new dns domain in maas. Use same record name just adjust the ip address.
+
+<details>
+
+![](../img/maas36.png)
+</details>
+
+
+<details>
+
+![](../img/maas37.png)
+</details>
+
+
+<details>
+
+![](../img/maas38.png)
+</details>
+
+<br>
+That's it!
+
+<br>
+
+Next step is operational openstack, you can access [here](https://docs.openstack.org/project-deploy-guide/charm-deployment-guide/latest/configure-openstack.html)

@@ -1,0 +1,34 @@
+series: focal
+applications:
+  openstack-dashboard:
+    charm: openstack-dashboard
+    num_units: 0
+    options:
+      openstack-origin: cloud:focal-yoga
+      action-managed-upgrade: true
+      use-internal-endpoints: true
+      cinder-backup: true
+      default-create-volume: false
+      endpoint-type: publicURL
+      image-formats: iso,qcow2,raw
+      neutron-network-l3ha: true
+      password-retrieve: true
+      secret: lychnobyte1337
+      session-timeout: 7200
+      webroot: /
+      os-public-hostname: dashboard.lychnobyte.cloud
+    bindings:
+      "": external
+      cluster: internal
+      dashboard-plugin: internal
+      ha: internal
+      identity-service: internal
+      shared-db: internal
+  dashboard-mysql-router:
+    charm: mysql-router
+    options:
+      source: cloud:focal-yoga
+    bindings:
+      "": external
+      shared-db: internal
+      db-router: internal
