@@ -435,3 +435,47 @@ Now, all units is `active` and `no missing relations`.
 
 ![](../img/juju25.png)
 </details>
+
+## Deploy Cinder
+
+Deploy `cinder` application using `cinder-bundle.yaml`.
+
+Deploy bundle
+```
+juju deploy ./cinder-bundle.yaml
+```
+
+Add `cinder` unit to `openstack-controller` as lxd
+and relation to `database`, `ceph-mon`, `nova`, `keystone`, `image` and `vault`
+
+```
+juju add-unit cinder --to lxd:0
+
+juju integrate cinder-mysql-router:db-router mysql-innodb-cluster:db-router
+juju integrate cinder-mysql-router:shared-db cinder:shared-db
+juju integrate cinder:amqp rabbitmq-server:amqp
+
+juju integrate cinder:cinder-volume-service nova-cloud-controller:cinder-volume-service
+juju integrate cinder:identity-service keystone:identity-service
+juju integrate cinder:image-service glance:image-service
+juju integrate cinder:certificates vault:certificates
+```
+
+<details>
+
+![](../img/juju26.png)
+</details>
+
+Last, add `cinder-ceph` relations to `ceph` for creating new pool to use by `cinder`.
+
+```
+// Cinder-ceph to create new pool in ceph
+juju integrate cinder-ceph:storage-backend cinder:storage-backend
+juju integrate cinder-ceph:ceph ceph-mon:client
+juju integrate cinder-ceph:ceph-access nova-compute:ceph-access
+```
+
+<details>
+
+![](../img/juju27.png)
+</details>

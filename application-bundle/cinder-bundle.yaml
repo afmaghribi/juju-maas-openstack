@@ -1,0 +1,48 @@
+series: focal
+applications:
+  cinder:
+    charm: cinder
+    num_units: 0
+    options:
+      openstack-origin: cloud:focal-yoga
+      action-managed-upgrade: true
+      use-internal-endpoints: true
+      glance-api-version: 2
+      block-device: None
+      remove-missing: true
+      region: Isekai
+      os-admin-hostname: cinder.lychnobyte.cloud
+      os-internal-hostname: cinder.internal.lychnobyte.cloud
+      os-public-hostname: cinder.lychnobyte.cloud
+    bindings:
+      "": external
+      amqp: internal
+      backup-backend: internal
+      ceph: internal
+      cinder-volume-service: internal
+      cluster: internal
+      ha: internal
+      identity-service: internal
+      image-service: internal
+      internal: internal
+      shared-db: internal
+      storage-backend: internal
+  cinder-mysql-router:
+    charm: mysql-router
+    options:
+      source: cloud:focal-yoga
+    bindings:
+      "": external
+      shared-db: internal
+      db-router: internal
+  cinder-ceph:
+    charm: cinder-ceph
+    options:
+      rbd-pool-name: cinder_general_1
+      rbd-flatten-volume-from-snapshot: true
+    bindings:
+      "": external
+      ceph: internal
+      ceph-access: internal
+      ceph-replication-device: internal
+      storage-backend: internal
