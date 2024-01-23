@@ -131,3 +131,9 @@ Some questions that probably asked by whoever read this repo.
    ```
    Well, initially i want to make all infras manage by script. But, i've skill issue to write some feature in my script so i use terraform to solved it. :)
    ```
+
+
+## Reference
+
+1. [https://medium.com/btech-engineering/install-openstack-yoga-menggunakan-maas-juju-7258c0213522](https://medium.com/btech-engineering/install-openstack-yoga-menggunakan-maas-juju-7258c0213522)
+2. [https://docs.openstack.org/project-deploy-guide/charm-deployment-guide/yoga/install-openstack.html](https://docs.openstack.org/project-deploy-guide/charm-deployment-guide/yoga/install-openstack.html)
